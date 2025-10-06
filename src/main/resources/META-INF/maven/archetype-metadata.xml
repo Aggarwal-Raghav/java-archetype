@@ -11,7 +11,10 @@
             <directory>style</directory>
         </fileSet>
         <fileSet>
-            <directory>LICENSE</directory>
+            <directory></directory>
+            <includes>
+                <include>LICENSE</include>
+            </includes>
         </fileSet>
     </fileSets>
 </archetype-descriptor>
