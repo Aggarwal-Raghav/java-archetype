@@ -63,6 +63,7 @@ limitations under the License.
   <!-- mvn versions:update-properties -Dmaven.version.ignore='(?i).*-(alpha|beta|m|rc)([-. ]?\d+)?' -DgenerateBackupPoms=false -->
   <properties>
     <google.java.format.version>1.25.2</google.java.format.version>
+    <maven.assembly.version>3.7.1</maven.assembly.version>
     <maven.compiler.version>3.14.0</maven.compiler.version>
     <maven.dependency.version>3.8.1</maven.dependency.version>
     <maven.exec.version>3.5.0</maven.exec.version>
@@ -80,6 +81,30 @@ limitations under the License.
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>${maven.assembly.version}</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>${groupId}.Main</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
