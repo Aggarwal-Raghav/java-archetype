@@ -41,9 +41,9 @@ limitations under the License.
   </developers>
 
   <scm>
-    <connection>scm:git:git://github.com/Aggarwal-Raghav/utils.git</connection>
-    <developerConnection>scm:git:ssh://github.com:Aggarwal-Raghav/utils.git</developerConnection>
-    <url>http://github.com/Aggarwal-Raghav/utils/tree/main</url>
+    <connection>scm:git:git://github.com/Aggarwal-Raghav/${artifactId}.git</connection>
+    <developerConnection>scm:git:ssh://github.com:Aggarwal-Raghav/${artifactId}.git</developerConnection>
+    <url>http://github.com/Aggarwal-Raghav/${artifactId}/tree/main</url>
   </scm>
 
   <distributionManagement>
