@@ -11,7 +11,7 @@
             <directory>style</directory>
         </fileSet>
         <fileSet>
-            <directory></directory>
+            <directory/>
             <includes>
                 <include>LICENSE</include>
             </includes>

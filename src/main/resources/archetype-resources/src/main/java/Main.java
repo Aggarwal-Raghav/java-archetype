@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Raghav Aggarwal
+ * Copyright 2026 Raghav Aggarwal
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.raghav;
+package ${package};
 
 public class Main {
   public static void main(String[] args) {

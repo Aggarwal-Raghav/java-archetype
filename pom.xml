@@ -1,5 +1,5 @@
 <!--
-Copyright 2025 Raghav Aggarwal
+Copyright 2026 Raghav Aggarwal
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,10 +16,17 @@ limitations under the License.
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.github.raghav</groupId>
+  <parent>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>38</version>
+  </parent>
+
+  <groupId>io.github.aggarwal-raghav</groupId>
   <artifactId>java-archetype</artifactId>
   <version>1.0</version>
   <packaging>maven-archetype</packaging>
+  <name>Java Archetype</name>
 
   <description>A maven archetype project with basic style checks and possibility to publish to central.</description>
   <url>https://github.com/Aggarwal-Raghav/java-archetype</url>
@@ -42,7 +49,7 @@ limitations under the License.
   <scm>
     <connection>scm:git:git://github.com/Aggarwal-Raghav/utils.git</connection>
     <developerConnection>scm:git:ssh://github.com:Aggarwal-Raghav/utils.git</developerConnection>
-    <url>http://github.com/Aggarwal-Raghav/utils/tree/main</url>
+    <url>https://github.com/Aggarwal-Raghav/utils/tree/main</url>
   </scm>
 
   <distributionManagement>
@@ -59,25 +66,16 @@ limitations under the License.
   </distributionManagement>
 
   <properties>
-    <google.java.format.version>1.25.2</google.java.format.version>
-    <maven.archetype.version>3.4.0</maven.archetype.version>
-    <maven.compiler.version>3.14.0</maven.compiler.version>
+    <central.publishing.plugin.version>0.11.0</central.publishing.plugin.version>
+    <google.java.format.version>1.36.1</google.java.format.version>
+    <javaVersion>21</javaVersion>
+    <maven.archetype.version>3.4.1</maven.archetype.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spotless.version>2.46.1</spotless.version>
+    <spotless.version>3.8.0</spotless.version>
   </properties>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven.compiler.version}</version>
-
-        <configuration>
-          <source>21</source>
-          <target>21</target>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
@@ -87,7 +85,6 @@ limitations under the License.
           <java>
             <googleJavaFormat>
               <version>${google.java.format.version}</version>
-
               <style>GOOGLE</style>
             </googleJavaFormat>
             <removeUnusedImports/>
@@ -107,6 +104,7 @@ limitations under the License.
               <include>pom.xml</include>
             </includes>
             <sortPom>
+              <expandEmptyElements>false</expandEmptyElements>
               <sortDependencies/>
               <sortProperties>true</sortProperties>
             </sortPom>
@@ -124,13 +122,7 @@ limitations under the License.
             </dbeaver>
           </sql>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
+
       </plugin>
     </plugins>
     <extensions>
@@ -141,4 +133,25 @@ limitations under the License.
       </extension>
     </extensions>
   </build>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>${central.publishing.plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>false</autoPublish>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>

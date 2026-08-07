@@ -1,5 +1,5 @@
 <!--
-Copyright 2025 Raghav Aggarwal
+Copyright 2026 Raghav Aggarwal
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,8 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>38</version>
+  </parent>
 
   <groupId>${groupId}</groupId>
   <artifactId>${artifactId}</artifactId>
@@ -43,77 +49,21 @@ limitations under the License.
   <scm>
     <connection>scm:git:git://github.com/Aggarwal-Raghav/${artifactId}.git</connection>
     <developerConnection>scm:git:ssh://github.com:Aggarwal-Raghav/${artifactId}.git</developerConnection>
-    <url>http://github.com/Aggarwal-Raghav/${artifactId}/tree/main</url>
+    <url>https://github.com/Aggarwal-Raghav/${artifactId}/tree/main</url>
   </scm>
-
-  <distributionManagement>
-    <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Nexus Release Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-    </repository>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype Nexus Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
 
   <!-- To update properties versions to latest versions ignoring alpha, beta, milestone and release candidates use: -->
   <!-- mvn versions:update-properties -Dmaven.version.ignore='(?i).*-(alpha|beta|m|rc)([-. ]?\d+)?' -DgenerateBackupPoms=false -->
   <properties>
-    <google.java.format.version>1.25.2</google.java.format.version>
-    <maven.assembly.version>3.7.1</maven.assembly.version>
-    <maven.compiler.version>3.14.0</maven.compiler.version>
-    <maven.dependency.version>3.8.1</maven.dependency.version>
-    <maven.exec.version>3.5.0</maven.exec.version>
-    <maven.gpg.version>3.2.7</maven.gpg.version>
-    <maven.jar.version>3.4.2</maven.jar.version>
-    <maven.javadoc.version>3.11.2</maven.javadoc.version>
-    <maven.source.version>3.3.1</maven.source.version>
+    <central.publishing.plugin.version>0.11.0</central.publishing.plugin.version>
+    <google.java.format.version>1.36.1</google.java.format.version>
+    <javaVersion>21</javaVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spotless.version>2.46.1</spotless.version>
+    <spotless.version>3.8.0</spotless.version>
   </properties>
-
-  <dependencyManagement>
-    <dependencies/>
-  </dependencyManagement>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>${maven.assembly.version}</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>${groupId}.Main</mainClass>
-            </manifest>
-          </archive>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <phase>package</phase>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven.compiler.version}</version>
-        <configuration>
-          <source>21</source>
-          <target>21</target>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
@@ -141,6 +91,7 @@ limitations under the License.
               <include>pom.xml</include>
             </includes>
             <sortPom>
+              <expandEmptyElements>false</expandEmptyElements>
               <sortDependencies/>
               <sortProperties>true</sortProperties>
             </sortPom>
@@ -158,63 +109,24 @@ limitations under the License.
             </dbeaver>
           </sql>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
+
       </plugin>
     </plugins>
   </build>
   <profiles>
     <profile>
       <id>release</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
       <build>
         <plugins>
           <plugin>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>${maven.source.version}</version>
-            <executions>
-              <execution>
-                <id>attach-source</id>
-                <goals>
-                  <goal>jar-no-fork</goal>
-                </goals>
-                <phase>compile</phase>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>${maven.javadoc.version}</version>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>${maven.gpg.version}</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-                <phase>verify</phase>
-              </execution>
-            </executions>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>${central.publishing.plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>false</autoPublish>
+            </configuration>
           </plugin>
         </plugins>
       </build>

@@ -10,10 +10,19 @@ mvn clean install
 
 ## Generate an archetype
 
-```
-mvn archetype:generate -DarchetypeGroupId=com.github.raghav -DarchetypeArtifactId=java-archetype -DarchetypeVersion=1.0-SNAPSHOT -DartifactId=my-super-utils -DgroupId=com.github.raghav
+```bash
+mvn archetype:generate \
+    -DarchetypeGroupId=io.github.aggarwal-raghav \
+    -DarchetypeArtifactId=java-archetype \
+    -DarchetypeVersion=1.0 \
+    -DgroupId=io.github.aggarwal-raghav \
+    -DartifactId=test \
+    -Dpackage=io.github.aggarwal_raghav \
+    -B
 ```
 
-## Inspired from:
+> **Note on package naming:**
+> My `groupId` (`io.github.aggarwal-raghav`) contains a hyphen, which is required to match my verified Maven Central namespace. However, Java package declarations cannot contain hyphens.
+>
+> To resolve this, always pass the `-Dpackage` flag explicitly with an underscore (as shown above). This tells Maven to use the hyphenated string for your `pom.xml` coordinates, but use the underscored string for your actual Java directories and code!
 
-https://github.com/zabetak/java-archetype
